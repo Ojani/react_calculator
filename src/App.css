@@ -62,3 +62,34 @@ body {
   top: .3em;
   margin-left: 1.25em;
 }
+
+@media only screen and  (max-width: 600px) {
+  .calculator {
+    width: 100vw;
+  }
+}
+
+@media only screen and  (max-width: 500px) {
+  .calculator {
+    padding: 15px;  
+  }
+
+  .screen {
+    background: white;
+    margin: 10px;
+  }
+
+  .button {
+    margin: 10px;
+    flex-basis: calc(25% - 20px);
+  }
+
+}
+
+@media only screen and  (max-width: 450px) {
+
+  .button {
+    flex-basis: calc(20% - 7px);
+  }
+
+}
