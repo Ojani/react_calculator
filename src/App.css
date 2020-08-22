@@ -19,6 +19,7 @@ body {
 }
 
 .screen {
+  overflow: scroll;
   background: white;
   margin: 15px;
   padding: 10px;
