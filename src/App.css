@@ -9,6 +9,7 @@ body {
   justify-content: center;
   height: 100vh;
   font-family: arial;
+  background: #333;
 }
 
 .calculator {
