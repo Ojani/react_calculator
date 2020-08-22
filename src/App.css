@@ -21,6 +21,7 @@ body {
 
 .screen {
   overflow-x: scroll;
+  overflow-y: hidden;
   background: white;
   margin: 15px;
   padding: 10px;
