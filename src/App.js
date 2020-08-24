@@ -28,23 +28,16 @@ function App() {
   function calculate() {
     var newExpression = expression;
 
-    //replacing #(# for #*(
-    var foundLeft = newExpression.match(/[0-9]\(/);
+      //replacing #(# for #*( & #)# for #)*#
+    var foundLeft = newExpression.match(/[0-9]\(/) || [];
+    var foundRight = newExpression.match(/\)[0-9]/) || [];
+    
+    const found = [...foundLeft, ...foundRight];
+    found.map(str => {
+      newExpression = newExpression.replace(str, str[0] + "*" + str[1]);
+    });
 
-    if(foundLeft) {
-      foundLeft.map(str => {
-        newExpression = newExpression.replace(str, str[0] + "*" + str[1]);
-      });
-    }
-
-    //replacing #)# for )*#
-    var foundRight = newExpression.match(/\)[0-9]/);
-
-    if(foundRight) {
-      foundRight.map(str => {
-        newExpression = newExpression.replace(str, str[0] + "*" + str[1]);
-      });
-    }
+    
 
     try {
       var result = `${ eval(newExpression) }`;
