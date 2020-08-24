@@ -31,8 +31,9 @@ function App() {
       //replacing #(# for #*( & #)# for #)*#
     var foundLeft = newExpression.match(/[0-9]\(/g) || [];
     var foundRight = newExpression.match(/\)[0-9]/g) || [];
+    var touchingParentheses = newExpression.match(/\)\(/g) || [];
     
-    const found = [...foundLeft, ...foundRight];
+    const found = [...foundLeft, ...foundRight, ...touchingParentheses];
     found.forEach(str => {
       newExpression = newExpression.replace(str, str[0] + "*" + str[1]);
     });
