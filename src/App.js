@@ -29,23 +29,24 @@ function App() {
     var newExpression = expression;
 
       //replacing #(# for #*( & #)# for #)*#
-    var foundLeft = newExpression.match(/[0-9]\(/) || [];
-    var foundRight = newExpression.match(/\)[0-9]/) || [];
+    var foundLeft = newExpression.match(/[0-9]\(/g) || [];
+    var foundRight = newExpression.match(/\)[0-9]/g) || [];
     
     const found = [...foundLeft, ...foundRight];
-    found.map(str => {
+    found.forEach(str => {
       newExpression = newExpression.replace(str, str[0] + "*" + str[1]);
     });
 
     
+    console.log(`Unparsed expression: \n ${ newExpression }`);
 
+    var result;
     try {
-      var result = `${ eval(newExpression) }`;
+      result = `${ eval(newExpression) }`;
     } catch {
-      var result = "NaN";
+      result = "NaN";
     }
     
-
     if(result === "Infinity" || result === "NaN" || result === "-Infinity") {
       setExpression('Error');
     } else {
