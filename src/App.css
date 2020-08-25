@@ -19,14 +19,44 @@ body {
   border-radius: 20px;
 }
 
+.screen-wrapper {
+  background: white;
+  position: relative;
+  margin: 15px;
+  font-size: 40px;
+  
+}
+
 .screen {
   overflow-x: scroll;
   overflow-y: hidden;
-  background: white;
-  margin: 15px;
-  padding: 10px;
-  font-size: 40px;
   height: 60px;
+  padding: 10px;
+  width: 95%;
+}
+
+.mem-btn {
+  user-select: none;
+  position: absolute;
+  font-size: .5em;
+  right: 0;
+  color: #444;
+  background: white;
+  width: 5%;
+  text-align: center;
+  height: 100%;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.mem-btn > div {
+  cursor: pointer;
+}
+
+.mem-down.hidden, .mem-up.hidden {
+  visibility: hidden;
 }
 
 .row {
@@ -93,7 +123,21 @@ body {
 @media only screen and  (max-width: 450px) {
 
   .button {
-    flex-basis: calc(20% - 7px);
+    flex-basis: calc(20% - 0px);
+    margin: 5px;
+  }
+
+}
+
+@media only screen and  (max-width: 425px) {
+
+  .mem-btn {
+    font-size: .45em;
+    width: 7.5%;
+  }
+
+  .screen {
+    width: 92.5%;
   }
 
 }

@@ -1,19 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import './App.css';
 import Screen from './screen';
 import Button from './button';
+import MemoryButton from './mem-controls';
 
 
 function App() {
 
+  const [memory, setMemory] = useState([]);
   const [screenContent, setScreenContent] = useState('');
   const [expression, setExpression] = useState('');
+  const [memoryIndex, setMemoryIndex] = useState(0);
 
   useEffect(() => {
     const readableExpression = expression.replace(/\*{2}/g, "^").replace(/\*/g, "x").replace(/\//g, "÷");
-
     setScreenContent(readableExpression);
-  }, [expression])
+
+  }, [expression]);
 
   function express(value) {
     const newExpression = expression.replace(/Error/, '');
@@ -25,10 +28,38 @@ function App() {
     setExpression('');
   }
 
+  // Going back or forth into calculator memory
+  function navigateMemory(jumps) {
+    var newIndex = memoryIndex +jumps;
+    setMemoryIndex(newIndex);
+
+    var currentMemo = memory[newIndex];
+    setExpression(currentMemo.expression);
+  }
+
   function calculate() {
+    // doing nothing if there is nothing to express
+    if(!expression) return;
+
+    //updating calculator memory.
+    setMemory(memory => {
+      var newMemory;
+
+      //removing oldest memory item to keep it 25 items or below
+      if(memory.length >= 25) {
+        newMemory = memory.slice(1, memory.length);
+      } else {
+        newMemory = [ ...memory ];
+      }
+
+      return [...newMemory, {
+        expression: expression
+      }];
+    });
+
     var newExpression = expression;
 
-      //replacing #(# for #*( & #)# for #)*#
+    //replacing #(# for #*( & #)# for #)*#
     var foundLeft = newExpression.match(/[0-9]\(/g) || [];
     var foundRight = newExpression.match(/\)[0-9]/g) || [];
     var touchingParentheses = newExpression.match(/\)\(/g) || [];
@@ -53,12 +84,16 @@ function App() {
     } else {
       setExpression(result);
     }
+    setMemoryIndex(memory.length +1);
   }
 
   return (
     <div className='calculator'>
 
-      <Screen screenContent={ screenContent } />
+      <div className='screen-wrapper'>
+        <Screen screenContent={ screenContent } memory={ memory } />
+        <MemoryButton memoryIndex={ memoryIndex } memoryLength={ memory.length } prevClickHandeler={ () => navigateMemory(-1) } nextClickHandeler={ () => navigateMemory(1) } />
+      </div>
 
       <div className='buttons'>
 
