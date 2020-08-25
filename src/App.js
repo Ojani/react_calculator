@@ -19,6 +19,9 @@ function App() {
   }, [expression]);
 
   function express(value) {
+    if(memoryIndex !== memory.length) {
+      setMemoryIndex(memory.length);
+    }
     const newExpression = expression.replace(/Error/, '');
 
     setExpression(newExpression + value);
@@ -26,6 +29,10 @@ function App() {
 
   function clear() {
     setExpression('');
+
+    if(memoryIndex !== memory.length) {
+      setMemoryIndex(memory.length);
+    }
   }
 
   // Going back or forth into calculator memory
